@@ -9,14 +9,18 @@ public class BrokenImgTest extends BaseTest {
     @Test
     public void findBrokenImage(){
         driver.get("https://practice.expandtesting.com/broken-images");
+        //Iterate over all <img> tag
         for(WebElement image:imagePage.images){
+            //get src attribute from <img> tage
             String url = image.getAttribute("src");
             verifyLink(url);
         }
     }
 
     public static void verifyLink(String url){
+        //hit the url
         Response response = RestAssured.given().contentType("application/json").get(url);
+        //check status code
         if(response.getStatusCode() != 200){
             System.out.println(url + " -- Image is broken");
         }
